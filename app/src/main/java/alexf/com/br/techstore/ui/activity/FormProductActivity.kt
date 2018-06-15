@@ -5,6 +5,7 @@ import alexf.com.br.techstore.database.AppDatabase
 import alexf.com.br.techstore.database.dao.ProductDao
 import alexf.com.br.techstore.model.Product
 import android.arch.persistence.room.Room
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_form_product.*
@@ -20,7 +21,6 @@ class FormProductActivity : AppCompatActivity() {
                 this,
                 AppDatabase::class.java,
                 "techstore-database")
-                .allowMainThreadQueries()
                 .build()
         productDao = database.productDao()
         configureSaveButton()
@@ -29,13 +29,21 @@ class FormProductActivity : AppCompatActivity() {
     private fun configureSaveButton() {
         form_product_save_button.setOnClickListener {
             saveProduct()
-            finish()
+
         }
     }
 
     private fun saveProduct() {
-        val createdProduct = create()
-        productDao.add(createdProduct)
+        SaveNote().execute()
+    }
+
+    inner class SaveNote : AsyncTask<Void, Void, Void>() {
+        override fun doInBackground(vararg p0: Void?): Void? {
+            val createdProduct = create()
+            productDao.add(createdProduct)
+            finish()
+            return null
+        }
     }
 
     private fun create(): Product {
