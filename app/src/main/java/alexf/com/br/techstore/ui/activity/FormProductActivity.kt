@@ -2,6 +2,7 @@ package alexf.com.br.techstore.ui.activity
 
 import alexf.com.br.techstore.R
 import alexf.com.br.techstore.database.AppDatabase
+import alexf.com.br.techstore.database.Database
 import alexf.com.br.techstore.database.dao.ProductDao
 import alexf.com.br.techstore.model.Product
 import android.arch.persistence.room.Room
@@ -17,11 +18,7 @@ class FormProductActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_product)
-        val database = Room.databaseBuilder(
-                this,
-                AppDatabase::class.java,
-                "techstore-database")
-                .build()
+        val database = Database.instance(this)
         productDao = database.productDao()
         configureSaveButton()
     }

@@ -3,7 +3,9 @@ package alexf.com.br.techstore.ui.activity.recyclerview
 import alexf.com.br.techstore.R
 import alexf.com.br.techstore.model.Product
 import android.content.Context
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,10 +35,13 @@ class ProductsListAdapter(
         notifyItemRangeInserted(0, products.size)
     }
 
-    fun replaceAllProducts(products: List<Product>) {
-        this.products.clear()
-        this.products.addAll(products)
-        notifyDataSetChanged()
+    fun update(newProducts: List<Product>){
+        val diffResult = DiffUtil.calculateDiff(ProductDiffUtil(
+                newProducts = newProducts,
+                oldProducts = products))
+        products.clear()
+        products.addAll(newProducts)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

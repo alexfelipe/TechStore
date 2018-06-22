@@ -9,8 +9,8 @@ import android.arch.persistence.room.Query
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM product")
-    fun all(): List<Product>
+    @Query("SELECT * FROM product ORDER BY id DESC")
+    fun all(): LiveData<List<Product>>
 
     @Insert
     fun add(vararg product: Product)
