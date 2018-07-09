@@ -8,7 +8,6 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_products_list.*
 
 
@@ -25,8 +24,7 @@ class ProductsListActivity : AppCompatActivity() {
         val productsLiveData = productDao.all()
         productsLiveData.observe(this, Observer { products ->
             products?.let {
-                Log.i("lista", it.toString())
-                adapter.update(it)
+                adapter.replaceAllProducts(it)
             }
         })
         configureRecyclerView()

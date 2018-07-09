@@ -1,11 +1,9 @@
 package alexf.com.br.techstore.ui.activity
 
 import alexf.com.br.techstore.R
-import alexf.com.br.techstore.database.AppDatabase
 import alexf.com.br.techstore.database.Database
 import alexf.com.br.techstore.database.dao.ProductDao
 import alexf.com.br.techstore.model.Product
-import android.arch.persistence.room.Room
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -26,7 +24,6 @@ class FormProductActivity : AppCompatActivity() {
     private fun configureSaveButton() {
         form_product_save_button.setOnClickListener {
             saveProduct()
-
         }
     }
 
