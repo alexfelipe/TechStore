@@ -12,10 +12,12 @@
         <activity android:name=".ui.activity.ProductsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.FormProductActivity"></activity>
+        <activity android:name=".ui.activity.FormProductActivity" />
+        <activity android:name=".ui.activity.ProductDetailActivity"></activity>
     </application>
 
 </manifest>

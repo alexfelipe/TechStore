@@ -3,13 +3,14 @@ package alexf.com.br.techstore.ui.activity
 import alexf.com.br.techstore.R
 import alexf.com.br.techstore.database.Database
 import alexf.com.br.techstore.database.dao.ProductDao
+import alexf.com.br.techstore.model.Product
 import alexf.com.br.techstore.ui.activity.recyclerview.ProductsListAdapter
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_products_list.*
-
 
 class ProductsListActivity : AppCompatActivity() {
 
@@ -39,8 +40,17 @@ class ProductsListActivity : AppCompatActivity() {
     }
 
     private fun configureRecyclerView() {
-        this.adapter = ProductsListAdapter(context = this)
+        this.adapter = ProductsListAdapter(context = this) {
+            goToProductDetail(it)
+        }
         products_list_recyclerview.adapter = adapter
+    }
+
+    private fun goToProductDetail(product: Product) {
+        val productDetailIntent = Intent(this,
+                ProductDetailActivity::class.java)
+        productDetailIntent.putExtra(PRODUCT_KEY, product)
+        startActivity(productDetailIntent)
     }
 
 }

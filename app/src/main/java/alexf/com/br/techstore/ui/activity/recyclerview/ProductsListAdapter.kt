@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.product_item.view.*
 
 class ProductsListAdapter(
         private val products: MutableList<Product> = mutableListOf(),
-        private val context: Context) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
+        private val context: Context,
+        var onItemClickListener: (Product) -> Unit = {}) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val createdView = LayoutInflater.from(context).inflate(R.layout.product_item, parent, false)
@@ -39,16 +41,27 @@ class ProductsListAdapter(
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val name: TextView = itemView.product_item_name
         private val description: TextView = itemView.product_item_description
         private val quantity: TextView = itemView.product_item_quantity
+        private lateinit var product: Product
+
+        init {
+            itemView.setOnClickListener {
+                if (::product.isInitialized) {
+                    onItemClickListener(product)
+                }
+            }
+        }
 
         fun bind(product: Product) {
+            this.product = product
             name.text = product.name
             description.text = product.description
             quantity.text = product.quantity.toString()
         }
+
     }
 }
