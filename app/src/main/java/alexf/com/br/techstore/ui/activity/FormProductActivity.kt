@@ -1,23 +1,21 @@
 package alexf.com.br.techstore.ui.activity
 
 import alexf.com.br.techstore.R
-import alexf.com.br.techstore.database.Database
 import alexf.com.br.techstore.database.dao.ProductDao
 import alexf.com.br.techstore.model.Product
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_form_product.*
+import org.koin.android.ext.android.inject
 
 class FormProductActivity : AppCompatActivity() {
 
-    private lateinit var productDao: ProductDao
+    private val productDao: ProductDao by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_product)
-        val database = Database.instance(this)
-        productDao = database.productDao()
         configureSaveButton()
     }
 

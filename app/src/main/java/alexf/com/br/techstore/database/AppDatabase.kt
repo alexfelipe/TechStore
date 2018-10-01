@@ -12,22 +12,3 @@ import android.content.Context
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 }
-
-object Database {
-
-    @Volatile
-    private lateinit var database: AppDatabase
-
-    fun instance(context: Context): AppDatabase {
-        synchronized(this) {
-            if (::database.isInitialized) return database
-            database = Room.databaseBuilder(
-                    context,
-                    AppDatabase::class.java,
-                    "techstore-database")
-                    .build()
-            return database
-        }
-    }
-
-}

@@ -1,4 +1,4 @@
-package alexf.com.br.techstore.ui.activity.recyclerview
+package alexf.com.br.techstore.ui.recyclerview
 
 import alexf.com.br.techstore.R
 import alexf.com.br.techstore.model.Product

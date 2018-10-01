@@ -1,24 +1,28 @@
 package alexf.com.br.techstore.database
 
+import alexf.com.br.techstore.di.koin.modules.dbModule
 import android.content.Context
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.runners.MockitoJUnitRunner
+import org.koin.android.ext.koin.with
+import org.koin.standalone.StandAloneContext.startKoin
+import org.koin.standalone.inject
+import org.koin.test.KoinTest
+import org.mockito.Mockito.mock
+import org.mockito.junit.MockitoJUnitRunner
 import kotlin.concurrent.thread
 
 @RunWith(MockitoJUnitRunner::class)
-class DatabaseTest {
+class DatabaseTest : KoinTest {
 
-    @Mock
-    private lateinit var context: Context
+    private val dbInstace: AppDatabase by inject()
 
     @Test
     fun `should get the same instance of Database when run threads simultaneously`() {
+        startKoin(listOf(dbModule)) with (mock(Context::class.java))
         repeat(10) {
             thread(start = true) {
-                var element = Database.instance(context)
-                println(element)
+                println(dbInstace)
             }
         }
         Thread.sleep(500)
